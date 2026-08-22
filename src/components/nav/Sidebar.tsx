@@ -259,14 +259,18 @@ export const Sidebar: React.FC<SidebarProps> = ({ catalog, allNotes, onSelectNot
       {/* Footer Info */}
       <div className="p-3.5 border-t border-white/[0.08] text-xs font-mono text-text-muted flex items-center justify-between">
         <span>BCA 2026 // ED.</span>
-        <a
-          href="https://github.com/jitendhull/Vanta"
-          target="_blank"
-          rel="noreferrer"
-          className="hover:text-accent transition-colors"
+        <Link
+          href="/about/"
+          onClick={onSelectNote}
+          className={`hover:text-accent transition-colors flex items-center gap-1 ${
+            pathname === "/about/" || pathname === "/about"
+              ? "text-accent font-semibold"
+              : "text-text-muted"
+          }`}
         >
-          GitHub ↗
-        </a>
+          <span>About Us</span>
+          <span>→</span>
+        </Link>
       </div>
     </aside>
   );
