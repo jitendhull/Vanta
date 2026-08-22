@@ -104,71 +104,179 @@ export function getFirstNoteByUnit(semester: number, subjectSlug: string, unitSl
   );
 }
 
+// Official BCA Curriculum Definition for MDU (Semesters 1 - 6)
+export const OFFICIAL_CURRICULUM: SemesterNode[] = [
+  {
+    semester: 1,
+    title: "Semester 1",
+    subjects: [
+      {
+        title: "Mathematics Foundation to Computer Science - I",
+        slug: "math-foundation-1",
+        units: [
+          { title: "Unit I: Set, Relation and Function", slug: "unit-1-set-relation-function", notes: [] },
+          { title: "Unit II: Counting and Recurrence Relation", slug: "unit-2-counting-recurrence", notes: [] },
+          { title: "Unit III: Elementary Graph Theory", slug: "unit-3-elementary-graph-theory", notes: [] },
+          { title: "Unit IV: Matrix Algebra", slug: "unit-4-matrix-algebra", notes: [] },
+        ],
+      },
+      {
+        title: "Problem Solving Techniques",
+        slug: "problem-solving-techniques",
+        units: [
+          { title: "Unit I: Problem Solving & Computational Thinking", slug: "unit-1-problem-solving-steps", notes: [] },
+          { title: "Unit II: Structured Programming & C Basics", slug: "unit-2-structured-programming", notes: [] },
+          { title: "Unit III: Control Flow & Number Logic", slug: "unit-3-control-flow-number-logic", notes: [] },
+          { title: "Unit IV: Modular Programming, Arrays & Strings", slug: "unit-4-modular-programming-arrays", notes: [] },
+        ],
+      },
+      {
+        title: "Computer Architecture",
+        slug: "computer-architecture",
+        units: [
+          { title: "Unit I: Digital Principles & Number Systems", slug: "unit-1-digital-principles", notes: [] },
+          { title: "Unit II: Combinational & Sequential Circuits", slug: "unit-2-circuits-and-registers", notes: [] },
+          { title: "Unit III: Basic Computer Organization & CPU", slug: "unit-3-computer-organization-cpu", notes: [] },
+          { title: "Unit IV: Pipeline, I/O & Memory Hierarchy", slug: "unit-4-pipeline-io-memory", notes: [] },
+        ],
+      },
+      {
+        title: "General English - I",
+        slug: "general-english-1",
+        units: [
+          { title: "Unit I: Vocabulary & Basic Writing Skills", slug: "unit-1-vocabulary-writing", notes: [] },
+          { title: "Unit II: Common Errors in Writing", slug: "unit-2-common-errors", notes: [] },
+          { title: "Unit III: Styles of Sensible Writing", slug: "unit-3-sensible-writing-précis", notes: [] },
+          { title: "Unit IV: Oral & Professional Communication", slug: "unit-4-oral-communication", notes: [] },
+        ],
+      },
+      {
+        title: "Indian Knowledge System (IKS-I)",
+        slug: "indian-knowledge-system-1",
+        units: [
+          { title: "Module 1: Introduction to IKS", slug: "module-1-intro-to-iks", notes: [] },
+          { title: "Module 2: Introduction to Creative Practices", slug: "module-2-creative-practices", notes: [] },
+        ],
+      },
+      {
+        title: "Environmental Science and Sustainability",
+        slug: "environmental-science",
+        units: [
+          { title: "Unit I: Environment, Resources & Sustainability", slug: "unit-1-environment-sustainability", notes: [] },
+          { title: "Unit II: Ecosystems & Biodiversity", slug: "unit-2-ecosystems-biodiversity", notes: [] },
+          { title: "Unit III: Pollution & Sustainable Development", slug: "unit-3-pollution-management", notes: [] },
+          { title: "Unit IV: Environmental Legislation & Social Issues", slug: "unit-4-social-issues-legislation", notes: [] },
+        ],
+      },
+    ],
+  },
+  {
+    semester: 2,
+    title: "Semester 2",
+    subjects: [
+      {
+        title: "Data Structures & Algorithms",
+        slug: "data-structures",
+        units: [
+          { title: "Unit I: Linear Data Structures", slug: "unit-1-linear-structures", notes: [] },
+          { title: "Unit II: Trees & Non-Linear Structures", slug: "unit-2-trees-graphs", notes: [] },
+        ],
+      },
+    ],
+  },
+  {
+    semester: 3,
+    title: "Semester 3",
+    subjects: [
+      {
+        title: "Database Management Systems",
+        slug: "dbms",
+        units: [
+          { title: "Unit I: Relational Model & SQL", slug: "unit-1-relational-model", notes: [] },
+        ],
+      },
+    ],
+  },
+  {
+    semester: 4,
+    title: "Semester 4",
+    subjects: [
+      {
+        title: "Computer Networks",
+        slug: "computer-networks",
+        units: [
+          { title: "Unit I: Network Architectures & Protocols", slug: "unit-1-network-architectures", notes: [] },
+        ],
+      },
+    ],
+  },
+  {
+    semester: 5,
+    title: "Semester 5",
+    subjects: [
+      {
+        title: "Java & Object Oriented Programming",
+        slug: "java-oop",
+        units: [
+          { title: "Unit I: JVM Architecture & Core Java", slug: "unit-1-jvm-architecture", notes: [] },
+        ],
+      },
+    ],
+  },
+  {
+    semester: 6,
+    title: "Semester 6",
+    subjects: [
+      {
+        title: "Web Technologies & Cloud",
+        slug: "web-technologies",
+        units: [
+          { title: "Unit I: Web Foundations & REST APIs", slug: "unit-1-rest-http", notes: [] },
+        ],
+      },
+    ],
+  },
+];
+
 export function getCatalogTree(): CatalogTree {
   const notes = getAllNotes();
-  const semesterMap = new Map<number, Map<string, Map<string, NoteMetadata[]>>>();
 
-  // Ensure default semesters 1 through 6 exist
-  for (let sem = 1; sem <= 6; sem++) {
-    if (!semesterMap.has(sem)) {
-      semesterMap.set(sem, new Map());
-    }
-  }
+  // Deep clone the official curriculum structure
+  const catalog: CatalogTree = JSON.parse(JSON.stringify(OFFICIAL_CURRICULUM));
 
   for (const note of notes) {
-    const sem = note.semester;
-    if (!semesterMap.has(sem)) {
-      semesterMap.set(sem, new Map());
+    let semNode = catalog.find((s) => s.semester === note.semester);
+    if (!semNode) {
+      semNode = {
+        semester: note.semester,
+        title: `Semester ${note.semester}`,
+        subjects: [],
+      };
+      catalog.push(semNode);
     }
 
-    const subMap = semesterMap.get(sem)!;
-    if (!subMap.has(note.subjectSlug)) {
-      subMap.set(note.subjectSlug, new Map());
+    let subNode = semNode.subjects.find((s) => s.slug === note.subjectSlug);
+    if (!subNode) {
+      subNode = {
+        title: note.subject,
+        slug: note.subjectSlug,
+        units: [],
+      };
+      semNode.subjects.push(subNode);
     }
 
-    const unitMap = subMap.get(note.subjectSlug)!;
-    if (!unitMap.has(note.unitSlug)) {
-      unitMap.set(note.unitSlug, []);
+    let unitNode = subNode.units.find((u) => u.slug === note.unitSlug);
+    if (!unitNode) {
+      unitNode = {
+        title: note.unit,
+        slug: note.unitSlug,
+        notes: [],
+      };
+      subNode.units.push(unitNode);
     }
 
-    unitMap.get(note.unitSlug)!.push(note);
+    unitNode.notes.push(note);
   }
 
-  const catalog: CatalogTree = [];
-
-  for (const [semNum, subMap] of Array.from(semesterMap.entries()).sort(([a], [b]) => a - b)) {
-    const subjects: SubjectNode[] = [];
-
-    for (const [subSlug, unitMap] of subMap.entries()) {
-      const units: UnitNode[] = [];
-      let subjectTitle = subSlug.replace(/-/g, " ");
-
-      for (const [uSlug, noteList] of unitMap.entries()) {
-        if (noteList.length > 0) {
-          subjectTitle = noteList[0].subject;
-        }
-        const unitTitle = noteList.length > 0 ? noteList[0].unit : uSlug.replace(/-/g, " ");
-
-        units.push({
-          title: unitTitle,
-          slug: uSlug,
-          notes: noteList,
-        });
-      }
-
-      subjects.push({
-        title: subjectTitle,
-        slug: subSlug,
-        units,
-      });
-    }
-
-    catalog.push({
-      semester: semNum,
-      title: `Semester ${semNum}`,
-      subjects,
-    });
-  }
-
-  return catalog;
+  return catalog.sort((a, b) => a.semester - b.semester);
 }

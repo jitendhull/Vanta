@@ -198,20 +198,30 @@ export const Sidebar: React.FC<SidebarProps> = ({ catalog, allNotes, onSelectNot
                                 return (
                                   <div key={unit.slug} className="space-y-0.5">
                                     {/* Unit Row */}
-                                    <button
-                                      onClick={() => toggleUnit(unit.slug)}
-                                      className="w-full flex items-center justify-between px-2.5 py-1 rounded hover:bg-white/[0.03] text-text-muted hover:text-text-primary transition-colors text-left"
-                                    >
-                                      <div className="flex items-center gap-1.5 truncate">
-                                        <Layers className="w-3 h-3 flex-shrink-0" />
-                                        <span className="truncate font-mono text-xs">{unit.title}</span>
+                                    {unit.notes.length > 0 ? (
+                                      <button
+                                        onClick={() => toggleUnit(unit.slug)}
+                                        className="w-full flex items-center justify-between px-2.5 py-1 rounded hover:bg-white/[0.03] text-text-muted hover:text-text-primary transition-colors text-left"
+                                      >
+                                        <div className="flex items-center gap-1.5 truncate">
+                                          <Layers className="w-3 h-3 flex-shrink-0" />
+                                          <span className="truncate font-mono text-xs">{unit.title}</span>
+                                        </div>
+                                        {isUnitExpanded ? (
+                                          <ChevronDown className="w-3 h-3 flex-shrink-0" />
+                                        ) : (
+                                          <ChevronRight className="w-3 h-3 flex-shrink-0" />
+                                        )}
+                                      </button>
+                                    ) : (
+                                      <div className="flex items-center justify-between px-2.5 py-1 text-text-muted/60 text-left">
+                                        <div className="flex items-center gap-1.5 truncate">
+                                          <Layers className="w-3 h-3 flex-shrink-0 opacity-40" />
+                                          <span className="truncate font-mono text-xs">{unit.title}</span>
+                                        </div>
+                                        <span className="text-[9px] font-mono px-1 py-0.2 rounded bg-white/[0.02] text-text-muted/40">soon</span>
                                       </div>
-                                      {isUnitExpanded ? (
-                                        <ChevronDown className="w-3 h-3 flex-shrink-0" />
-                                      ) : (
-                                        <ChevronRight className="w-3 h-3 flex-shrink-0" />
-                                      )}
-                                    </button>
+                                    )}
 
                                     {/* Notes Links */}
                                     {isUnitExpanded && (
