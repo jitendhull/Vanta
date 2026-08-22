@@ -15,21 +15,16 @@ export default function HomePage() {
   };
 
   return (
-    <div className="max-w-[76ch] mx-auto space-y-10">
+    <div className="max-w-[76ch] mx-auto space-y-10 animate-fade-in">
       {/* Hero header */}
       <div className="space-y-4 border-b border-white/[0.08] pb-8">
-        <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-accent/10 border border-accent/20 text-accent font-mono text-xs">
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>BCA ARCHIVE // 100% STATIC & OFFLINE-READY</span>
-        </div>
-
         <h1 className="text-3xl sm:text-4xl font-bold font-sans tracking-tight text-text-primary">
           Vanta Notes Library
         </h1>
 
         <p className="text-sm sm:text-base text-text-muted leading-relaxed font-sans">
-          A minimalist digital repository and design system for Bachelor of Computer Applications students.
-          Explore formal definitions, syntax guides, comparison charts, and download complete verified PDF notes.
+          A minimalist digital repository and reference system for Bachelor of Computer Applications students.
+          Explore curriculum notes, code syntax guides, and direct PDF downloads.
         </p>
       </div>
 
@@ -48,12 +43,15 @@ export default function HomePage() {
             const firstNote = hasSubjects && sem.subjects[0].units[0]?.notes[0];
             const targetUrl = firstNote
               ? `/notes/${firstNote.slug.join("/")}/`
-              : "#";
+              : null;
 
-            return (
+            const CardContent = (
               <div
-                key={sem.semester}
-                className="p-5 rounded-lg bg-surface border border-white/[0.08] hover:border-accent/40 transition-all flex flex-col justify-between group"
+                className={`p-5 rounded-lg bg-surface border border-white/[0.08] transition-all duration-200 flex flex-col justify-between h-full group ${
+                  targetUrl
+                    ? "hover:border-accent/50 hover:bg-surface-elevated hover:shadow-lg hover:shadow-accent/5 cursor-pointer"
+                    : "opacity-75"
+                }`}
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
@@ -79,17 +77,28 @@ export default function HomePage() {
 
                 <div className="mt-5 pt-3 border-t border-white/[0.05]">
                   {hasSubjects && firstNote ? (
-                    <Link
-                      href={targetUrl}
-                      className="inline-flex items-center gap-1.5 text-xs font-mono text-accent hover:underline"
-                    >
+                    <span className="inline-flex items-center gap-1.5 text-xs font-mono text-accent group-hover:translate-x-0.5 transition-transform">
                       <span>Explore Notes</span>
                       <span>→</span>
-                    </Link>
+                    </span>
                   ) : (
                     <span className="text-xs font-mono text-text-muted/60">Under Preparation</span>
                   )}
                 </div>
+              </div>
+            );
+
+            if (targetUrl) {
+              return (
+                <Link key={sem.semester} href={targetUrl} className="block no-underline">
+                  {CardContent}
+                </Link>
+              );
+            }
+
+            return (
+              <div key={sem.semester}>
+                {CardContent}
               </div>
             );
           })}
@@ -103,9 +112,9 @@ export default function HomePage() {
           <span>FEATURES & DESIGN CONSTRAINTS</span>
         </div>
         <ul className="space-y-1.5 list-disc pl-5">
-          <li>Obsidian callouts support: Amber (definition), Green (valid), Red (pitfall), Blue (example).</li>
+          <li>Obsidian callouts support: Definitions, Valid laws, Common pitfalls, and Examples.</li>
           <li>Zero dynamic servers: 100% static export on GitHub Pages with instant navigation.</li>
-          <li>WebGL2 fluid backdrop running on throttled low-power GPU mode.</li>
+          <li>Optimized GPU atmosphere backdrop with low-power mode.</li>
         </ul>
       </div>
     </div>

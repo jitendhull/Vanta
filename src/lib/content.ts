@@ -42,6 +42,8 @@ export function getAllNotes(): NoteItem[] {
     const subjectSlug = parts[1] || data.subjectSlug || "general";
     const unitSlug = parts[2] || data.unitSlug || "unit-1";
 
+    const pdfRelPath = rel.replace(/\.mdx?$/, ".pdf");
+
     const noteMeta: NoteMetadata = {
       title: data.title || parts[parts.length - 1].replace(/-/g, " "),
       semester,
@@ -50,8 +52,8 @@ export function getAllNotes(): NoteItem[] {
       unit: data.unit || unitSlug.replace(/-/g, " "),
       unitSlug,
       slug: parts,
+      pdfUrl: data.pdfUrl || `https://raw.githubusercontent.com/jitendhull/Vanta/main/content/${pdfRelPath}`,
       githubUrl: `https://github.com/jitendhull/Vanta/blob/main/content/${rel}`,
-      rawGithubUrl: `https://raw.githubusercontent.com/jitendhull/Vanta/main/content/${rel}`,
       description: data.description || "",
       order: data.order !== undefined ? data.order : 0,
     };

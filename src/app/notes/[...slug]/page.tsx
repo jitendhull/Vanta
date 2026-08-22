@@ -26,7 +26,7 @@ export default async function NotePage({ params }: NotePageProps) {
   }
 
   return (
-    <article className="max-w-[76ch] mx-auto space-y-6">
+    <article className="max-w-[76ch] mx-auto space-y-6 animate-fade-in">
       {/* Top Breadcrumbs */}
       <Breadcrumbs note={note} />
 
@@ -44,8 +44,8 @@ export default async function NotePage({ params }: NotePageProps) {
 
       {/* GitHub Source Access & Download Bar */}
       <NoteSourceBar
+        pdfUrl={note.pdfUrl}
         githubUrl={note.githubUrl}
-        rawGithubUrl={note.rawGithubUrl}
         title={note.title}
       />
 

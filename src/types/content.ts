@@ -6,8 +6,8 @@ export interface NoteMetadata {
   unit: string; // e.g. "Unit 1: Set Theory"
   unitSlug: string; // e.g. "unit-1-set-theory"
   slug: string[]; // ["semester-1", "discrete-mathematics", "unit-1-set-theory"]
+  pdfUrl: string; // Link to verified PDF file
   githubUrl: string; // Link to file in github repo
-  rawGithubUrl: string; // Direct raw download link from github
   description?: string;
   order?: number;
 }
