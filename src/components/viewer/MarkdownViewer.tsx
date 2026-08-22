@@ -10,6 +10,18 @@ interface MarkdownViewerProps {
   content: string;
 }
 
+// Extract string recursively from React children
+function extractRawText(node: any): string {
+  if (typeof node === "string") return node;
+  if (typeof node === "number") return String(node);
+  if (!node) return "";
+  if (Array.isArray(node)) return node.map(extractRawText).join("");
+  if (React.isValidElement(node) && (node.props as any)?.children) {
+    return extractRawText((node.props as any).children);
+  }
+  return "";
+}
+
 export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
   return (
     <div className="prose prose-invert max-w-[68ch] leading-relaxed text-text-primary text-sm sm:text-base space-y-4">
@@ -18,38 +30,45 @@ export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
         rehypePlugins={[rehypeHighlight]}
         components={{
           // Blockquote parser for Obsidian-style callouts: > [!definition] Title
-          blockquote({ children, ...props }) {
-            // Find text content inside blockquote to identify callout marker
+          blockquote({ children }) {
             const childrenArray = React.Children.toArray(children);
-            const firstChild = childrenArray[0];
-
-            let rawText = "";
-            if (React.isValidElement(firstChild) && (firstChild.props as any)?.children) {
-              const nestedChildren = React.Children.toArray((firstChild.props as any).children);
-              rawText = typeof nestedChildren[0] === "string" ? nestedChildren[0] : "";
-            }
-
-            const match = rawText.match(/^\[!(definition|valid|invalid|example|compare|note)\]\s*(.*)$/i);
+            const rawText = extractRawText(children);
+            const match = rawText.match(/^\s*\[!(definition|valid|invalid|example|compare|note)\]([^\n]*)/i);
 
             if (match) {
               const type = match[1].toLowerCase() as CalloutType;
               const title = match[2].trim() || type.toUpperCase();
 
-              // Remove the callout marker line from rendering
-              const remainingElements = childrenArray.map((child, idx) => {
+              // Remove the "[!type] Title" from the rendered elements
+              const modifiedChildren = childrenArray.map((child, idx) => {
                 if (idx === 0 && React.isValidElement(child)) {
-                  const pChildren = React.Children.toArray((child.props as any).children);
-                  const modifiedPChildren = pChildren.slice(1);
+                  const pChildren = React.Children.toArray((child.props as any)?.children || []);
+                  const newPChildren = pChildren
+                    .map((pChild) => {
+                      if (typeof pChild === "string") {
+                        const cleaned = pChild
+                          .replace(/^\s*\[!(definition|valid|invalid|example|compare|note)\][^\n]*/i, "")
+                          .trim();
+                        return cleaned || null;
+                      }
+                      return pChild;
+                    })
+                    .filter(Boolean);
+
+                  if (newPChildren.length === 0) {
+                    return null;
+                  }
+
                   return React.cloneElement(child as React.ReactElement<any>, {
-                    children: modifiedPChildren,
+                    children: newPChildren,
                   });
                 }
                 return child;
-              });
+              }).filter(Boolean);
 
               return (
                 <CalloutCard type={type} title={title}>
-                  {remainingElements}
+                  {modifiedChildren}
                 </CalloutCard>
               );
             }
