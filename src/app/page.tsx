@@ -23,8 +23,8 @@ export default function HomePage() {
         </h1>
 
         <p className="text-sm sm:text-base text-text-muted leading-relaxed font-sans">
-          A minimalist digital repository and reference system for Bachelor of Computer Applications students.
-          Explore curriculum notes, code syntax guides, and direct PDF downloads.
+          A free, fast, and structured digital notes archive for Bachelor of Computer Applications (BCA) students.
+          Explore syllabus topics, verified code examples, and direct PDF downloads.
         </p>
       </div>
 
@@ -109,12 +109,12 @@ export default function HomePage() {
       <div className="p-5 rounded-lg bg-surface/60 border border-white/[0.08] space-y-3 font-mono text-xs text-text-muted">
         <div className="text-text-primary font-medium flex items-center gap-2">
           <span>✦</span>
-          <span>FEATURES & DESIGN CONSTRAINTS</span>
+          <span>KEY FEATURES</span>
         </div>
         <ul className="space-y-1.5 list-disc pl-5">
-          <li>Obsidian callouts support: Definitions, Valid laws, Common pitfalls, and Examples.</li>
-          <li>Zero dynamic servers: 100% static export on GitHub Pages with instant navigation.</li>
-          <li>Optimized GPU atmosphere backdrop with low-power mode.</li>
+          <li>Callout boxes: clear highlights for definitions, verified rules, common mistakes, and practical examples.</li>
+          <li>Fast and private: 100% static pages hosted on GitHub with no tracking scripts or server delays.</li>
+          <li>Optimized performance: smooth dark theme with low-power mode support.</li>
         </ul>
       </div>
     </div>

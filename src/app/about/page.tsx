@@ -21,7 +21,7 @@ export const metadata = {
 export default function AboutPage() {
   return (
     <article className="max-w-[76ch] mx-auto space-y-8 animate-fade-in py-2">
-      {/* Navigation back link */}
+      {/* Navigation link */}
       <div>
         <Link
           href="/"
@@ -38,19 +38,17 @@ export default function AboutPage() {
           About Vanta
         </h1>
         <p className="text-sm text-text-muted font-sans leading-relaxed">
-          A minimalist digital reference system and note archive built for BCA students.
+          A free, fast, and structured digital notes archive for Bachelor of Computer Applications (BCA) students.
         </p>
       </header>
 
-      {/* Mission statement */}
-      <section className="space-y-4">
+      {/* Purpose */}
+      <section className="space-y-3">
         <h2 className="text-sm font-mono uppercase tracking-wider text-text-muted">
-          Philosophy & Mission
+          Purpose
         </h2>
         <p className="text-sm text-text-primary/90 leading-relaxed font-sans">
-          Vanta is designed to make computer application coursework straightforward and distraction-free.
-          Built primarily around the Maharishi Dayanand University (MDU, Rohtak) BCA curriculum, it provides direct access to structured
-          topics, syntax references, core mathematical foundations, and verified offline PDF study material without cluttered course portals.
+          Vanta helps BCA students study effectively without distractions. The content aligns with the syllabus of Maharishi Dayanand University (MDU, Rohtak). Students can read curriculum topics online, check verified code examples, and download offline PDF study materials directly.
         </p>
       </section>
 
@@ -131,19 +129,19 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Grid of Core Pillars */}
+      {/* Key Benefits */}
       <section className="space-y-4">
         <h2 className="text-sm font-mono uppercase tracking-wider text-text-muted">
-          Core Pillars
+          Key Features
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="p-4 rounded-lg bg-surface border border-white/[0.08] space-y-2">
             <div className="flex items-center gap-2 text-accent">
               <Terminal className="w-4 h-4" />
-              <span className="font-mono text-xs font-semibold uppercase">Clean Syntax & Code</span>
+              <span className="font-mono text-xs font-semibold uppercase">Accurate Code Examples</span>
             </div>
             <p className="text-xs text-text-muted leading-relaxed">
-              Practical C, Java, and Database scripts formatted with precise syntax highlighting and runtime complexity notes.
+              Read syntax-highlighted code in C, Java, and SQL with clear explanations and notes on complexity.
             </p>
           </div>
 
@@ -153,27 +151,27 @@ export default function AboutPage() {
               <span className="font-mono text-xs font-semibold uppercase">Structured Curriculum</span>
             </div>
             <p className="text-xs text-text-muted leading-relaxed">
-              Indexed across Semesters 1 through 6, organized strictly by subjects, units, and exam-relevant topics.
+              Browse Semesters 1 through 6 organized logically by subject, unit, and exam topic.
             </p>
           </div>
 
           <div className="p-4 rounded-lg bg-surface border border-white/[0.08] space-y-2">
             <div className="flex items-center gap-2 text-accent">
               <BookOpen className="w-4 h-4" />
-              <span className="font-mono text-xs font-semibold uppercase">Direct Repository Access</span>
+              <span className="font-mono text-xs font-semibold uppercase">Direct Downloads</span>
             </div>
             <p className="text-xs text-text-muted leading-relaxed">
-              Every note connects directly to its version-controlled GitHub repository source for instant raw reading and offline PDF downloads.
+              Open source markdown files on GitHub or download printable PDF notes with one click.
             </p>
           </div>
 
           <div className="p-4 rounded-lg bg-surface border border-white/[0.08] space-y-2">
             <div className="flex items-center gap-2 text-accent">
               <ShieldCheck className="w-4 h-4" />
-              <span className="font-mono text-xs font-semibold uppercase">100% Static & Private</span>
+              <span className="font-mono text-xs font-semibold uppercase">Private and Fast</span>
             </div>
             <p className="text-xs text-text-muted leading-relaxed">
-              Zero trackers, zero analytics, zero external API delays. High performance static pages delivered via GitHub Pages.
+              No ads, no tracking scripts, and no sign-up required. Pages load instantly as static content.
             </p>
           </div>
         </div>
@@ -185,10 +183,10 @@ export default function AboutPage() {
         <div className="p-4 rounded-lg bg-surface border border-white/[0.08] space-y-2">
           <div className="flex items-center gap-2 text-accent">
             <MessageCircle className="w-4 h-4" />
-            <span className="font-mono text-xs font-semibold uppercase">Contributions</span>
+            <span className="font-mono text-xs font-semibold uppercase">How to Contribute</span>
           </div>
           <p className="text-xs text-text-muted leading-relaxed">
-            Want to submit notes, corrections, or study material? Reach out directly via DM or connect face-to-face on university campus / hostel.
+            Have corrections, new notes, or study guides? Reach out directly by sending a message or talking in person on campus or in the hostel.
           </p>
         </div>
 
@@ -196,10 +194,10 @@ export default function AboutPage() {
         <div className="p-4 rounded-lg bg-surface border border-white/[0.08] space-y-2">
           <div className="flex items-center gap-2 text-accent">
             <Sparkles className="w-4 h-4" />
-            <span className="font-mono text-xs font-semibold uppercase">Upcoming Features</span>
+            <span className="font-mono text-xs font-semibold uppercase">Upcoming Additions</span>
           </div>
           <p className="text-xs text-text-muted leading-relaxed">
-            MCQ / Quiz modules, AI-powered summaries, interactive AI learning companions, and expanded notes for future semesters.
+            Multiple-choice quizzes, AI summaries, interactive practice questions, and notes for higher semesters.
           </p>
         </div>
       </section>
@@ -208,10 +206,10 @@ export default function AboutPage() {
       <section className="p-4 rounded-lg bg-surface border border-white/[0.08] space-y-2">
         <div className="flex items-center gap-2 text-accent">
           <Heart className="w-4 h-4" />
-          <span className="font-mono text-xs font-semibold uppercase">Credits & Acknowledgments</span>
+          <span className="font-mono text-xs font-semibold uppercase">Credits</span>
         </div>
         <p className="text-xs text-text-muted leading-relaxed">
-          Special thanks to <span className="text-text-primary font-medium">kern (Arjun Ahlawat)</span> for starting and laying the foundation for the notes.
+          Special thanks to <span className="text-text-primary font-medium">kern (Arjun Ahlawat)</span> for creating the original notes.
         </p>
       </section>
 
