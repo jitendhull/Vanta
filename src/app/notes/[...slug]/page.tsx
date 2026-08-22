@@ -1,5 +1,11 @@
 import { notFound } from "next/navigation";
-import { getAllNotes, getNoteBySlug } from "@/lib/content";
+import {
+  getAllNotes,
+  getNoteBySlug,
+  getFirstNoteBySemester,
+  getFirstNoteBySubject,
+  getFirstNoteByUnit,
+} from "@/lib/content";
 import { Breadcrumbs } from "@/components/nav/Breadcrumbs";
 import { MarkdownViewer } from "@/components/viewer/MarkdownViewer";
 import { NoteSourceBar } from "@/components/viewer/NoteSourceBar";
@@ -25,10 +31,23 @@ export default async function NotePage({ params }: NotePageProps) {
     notFound();
   }
 
+  const semNote = getFirstNoteBySemester(note.semester);
+  const subjectNote = getFirstNoteBySubject(note.semester, note.subjectSlug);
+  const unitNote = getFirstNoteByUnit(note.semester, note.subjectSlug, note.unitSlug);
+
+  const semUrl = semNote ? `/notes/${semNote.slug.join("/")}/` : "/";
+  const subjectUrl = subjectNote ? `/notes/${subjectNote.slug.join("/")}/` : undefined;
+  const unitUrl = unitNote ? `/notes/${unitNote.slug.join("/")}/` : undefined;
+
   return (
     <article className="max-w-[76ch] mx-auto space-y-6 animate-fade-in">
       {/* Top Breadcrumbs */}
-      <Breadcrumbs note={note} />
+      <Breadcrumbs
+        note={note}
+        semUrl={semUrl}
+        subjectUrl={subjectUrl}
+        unitUrl={unitUrl}
+      />
 
       {/* Note Header Title */}
       <header className="border-b border-white/[0.08] pb-4 space-y-2">

@@ -85,6 +85,25 @@ export function getNoteBySlug(slugArray: string[]): NoteItem | null {
   return notes.find((n) => n.slug.join("/") === slugPath) || null;
 }
 
+export function getFirstNoteBySemester(semester: number): NoteItem | null {
+  const notes = getAllNotes();
+  return notes.find((n) => n.semester === semester) || null;
+}
+
+export function getFirstNoteBySubject(semester: number, subjectSlug: string): NoteItem | null {
+  const notes = getAllNotes();
+  return notes.find((n) => n.semester === semester && n.subjectSlug === subjectSlug) || null;
+}
+
+export function getFirstNoteByUnit(semester: number, subjectSlug: string, unitSlug: string): NoteItem | null {
+  const notes = getAllNotes();
+  return (
+    notes.find(
+      (n) => n.semester === semester && n.subjectSlug === subjectSlug && n.unitSlug === unitSlug
+    ) || null
+  );
+}
+
 export function getCatalogTree(): CatalogTree {
   const notes = getAllNotes();
   const semesterMap = new Map<number, Map<string, Map<string, NoteMetadata[]>>>();

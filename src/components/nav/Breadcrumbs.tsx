@@ -5,19 +5,30 @@ import { NoteMetadata } from "@/types/content";
 
 interface BreadcrumbsProps {
   note: NoteMetadata;
+  semUrl?: string;
+  subjectUrl?: string;
+  unitUrl?: string;
 }
 
-export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ note }) => {
-  // Compute breadcrumb path links
-  // slug e.g. ["semester-1", "discrete-mathematics", "unit-1-set-theory"]
-  const [semSlug, subSlug] = note.slug;
-  const noteUrl = `/notes/${note.slug.join("/")}/`;
+export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
+  note,
+  semUrl = "/",
+  subjectUrl,
+  unitUrl,
+}) => {
+  const currentNoteUrl = `/notes/${note.slug.join("/")}/`;
+  const targetSubjectUrl = subjectUrl || currentNoteUrl;
+  const targetUnitUrl = unitUrl || currentNoteUrl;
 
   return (
-    <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-mono text-text-muted overflow-x-auto whitespace-nowrap py-1.5 scrollbar-none">
+    <nav
+      aria-label="Breadcrumb"
+      className="flex items-center gap-1.5 text-xs font-mono text-text-muted overflow-x-auto whitespace-nowrap py-2 border-b border-white/[0.06] mb-4"
+    >
       <Link
         href="/"
-        className="flex items-center gap-1.5 text-text-muted hover:text-accent transition-colors p-1 rounded hover:bg-white/[0.04]"
+        className="flex items-center gap-1 px-2 py-1 rounded bg-white/[0.03] hover:bg-accent/15 text-text-muted hover:text-accent border border-white/[0.06] hover:border-accent/30 transition-all font-semibold"
+        title="Home"
       >
         <Home className="w-3.5 h-3.5" />
         <span>BCA</span>
@@ -26,8 +37,9 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ note }) => {
       <ChevronRight className="w-3.5 h-3.5 flex-shrink-0 text-white/20" />
 
       <Link
-        href="/"
-        className="hover:text-accent transition-colors px-1.5 py-0.5 rounded hover:bg-white/[0.04]"
+        href={semUrl}
+        className="px-2 py-1 rounded bg-white/[0.03] hover:bg-accent/15 text-text-muted hover:text-accent border border-white/[0.06] hover:border-accent/30 transition-all"
+        title={`Semester ${note.semester}`}
       >
         Sem-{note.semester}
       </Link>
@@ -35,8 +47,9 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ note }) => {
       <ChevronRight className="w-3.5 h-3.5 flex-shrink-0 text-white/20" />
 
       <Link
-        href={noteUrl}
-        className="hover:text-accent transition-colors px-1.5 py-0.5 rounded hover:bg-white/[0.04] max-w-[150px] sm:max-w-none truncate"
+        href={targetSubjectUrl}
+        className="px-2 py-1 rounded bg-white/[0.03] hover:bg-accent/15 text-text-muted hover:text-accent border border-white/[0.06] hover:border-accent/30 transition-all max-w-[160px] sm:max-w-none truncate"
+        title={note.subject}
       >
         {note.subject}
       </Link>
@@ -44,15 +57,19 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ note }) => {
       <ChevronRight className="w-3.5 h-3.5 flex-shrink-0 text-white/20" />
 
       <Link
-        href={noteUrl}
-        className="hover:text-accent transition-colors px-1.5 py-0.5 rounded hover:bg-white/[0.04] max-w-[150px] sm:max-w-none truncate"
+        href={targetUnitUrl}
+        className="px-2 py-1 rounded bg-white/[0.03] hover:bg-accent/15 text-text-muted hover:text-accent border border-white/[0.06] hover:border-accent/30 transition-all max-w-[160px] sm:max-w-none truncate"
+        title={note.unit}
       >
         {note.unit}
       </Link>
 
       <ChevronRight className="w-3.5 h-3.5 flex-shrink-0 text-white/20" />
 
-      <span className="text-text-primary font-medium px-1.5 py-0.5 max-w-[180px] sm:max-w-none truncate">
+      <span
+        className="px-2 py-1 rounded bg-accent/10 text-accent font-medium border border-accent/20 max-w-[200px] sm:max-w-none truncate"
+        title={note.title}
+      >
         {note.title}
       </span>
     </nav>
