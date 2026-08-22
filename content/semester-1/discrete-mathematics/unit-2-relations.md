@@ -6,7 +6,6 @@ subjectSlug: "discrete-mathematics"
 unit: "Unit 2: Relations & Functions"
 unitSlug: "unit-2-relations-functions"
 order: 2
-pdfUrl: "/notes/bca-sem1-discrete-maths.pdf"
 description: "Reflexivity, symmetry, transitivity, equivalence classes, and partial order relations."
 ---
 

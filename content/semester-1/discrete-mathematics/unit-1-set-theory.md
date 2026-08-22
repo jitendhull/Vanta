@@ -6,7 +6,6 @@ subjectSlug: "discrete-mathematics"
 unit: "Unit 1: Set Theory"
 unitSlug: "unit-1-set-theory"
 order: 1
-pdfUrl: "/notes/bca-sem1-discrete-maths.pdf"
 description: "Foundational set operations, union, intersection, complement, cartesian product, and formal set laws."
 ---
 

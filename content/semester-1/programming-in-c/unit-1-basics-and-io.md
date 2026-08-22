@@ -6,7 +6,6 @@ subjectSlug: "programming-in-c"
 unit: "Unit 1: Fundamentals of C"
 unitSlug: "unit-1-fundamentals-of-c"
 order: 1
-pdfUrl: "/notes/bca-sem1-c-programming.pdf"
 description: "Core primitive data types, memory layout, operator precedence, and formatted I/O operations."
 ---
 

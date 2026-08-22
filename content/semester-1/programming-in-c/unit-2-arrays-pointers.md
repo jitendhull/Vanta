@@ -6,7 +6,6 @@ subjectSlug: "programming-in-c"
 unit: "Unit 2: Arrays & Pointers"
 unitSlug: "unit-2-arrays-pointers"
 order: 2
-pdfUrl: "/notes/bca-sem1-c-programming.pdf"
 description: "Contiguous memory allocation, pointer arithmetic, array-decay, and dynamic memory allocation."
 ---
 

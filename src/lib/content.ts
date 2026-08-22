@@ -42,7 +42,10 @@ export function getAllNotes(): NoteItem[] {
     const subjectSlug = parts[1] || data.subjectSlug || "general";
     const unitSlug = parts[2] || data.unitSlug || "unit-1";
 
+    // Generate direct GitHub repository raw download URL for PDF
+    // points to github repo raw content: https://raw.githubusercontent.com/jitendhull/Vanta/main/content/...
     const pdfRelPath = rel.replace(/\.mdx?$/, ".pdf");
+    const githubPdfUrl = `https://raw.githubusercontent.com/jitendhull/Vanta/main/content/${pdfRelPath}`;
 
     const noteMeta: NoteMetadata = {
       title: data.title || parts[parts.length - 1].replace(/-/g, " "),
@@ -52,7 +55,9 @@ export function getAllNotes(): NoteItem[] {
       unit: data.unit || unitSlug.replace(/-/g, " "),
       unitSlug,
       slug: parts,
-      pdfUrl: data.pdfUrl || `https://raw.githubusercontent.com/jitendhull/Vanta/main/content/${pdfRelPath}`,
+      pdfUrl: (data.pdfUrl && !data.pdfUrl.startsWith("/"))
+        ? data.pdfUrl
+        : githubPdfUrl,
       githubUrl: `https://github.com/jitendhull/Vanta/blob/main/content/${rel}`,
       description: data.description || "",
       order: data.order !== undefined ? data.order : 0,
