@@ -50,7 +50,8 @@ export function getAllNotes(): NoteItem[] {
       unit: data.unit || unitSlug.replace(/-/g, " "),
       unitSlug,
       slug: parts,
-      pdfUrl: data.pdfUrl || undefined,
+      githubUrl: `https://github.com/jitendhull/Vanta/blob/main/content/${rel}`,
+      rawGithubUrl: `https://raw.githubusercontent.com/jitendhull/Vanta/main/content/${rel}`,
       description: data.description || "",
       order: data.order !== undefined ? data.order : 0,
     };

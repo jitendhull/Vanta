@@ -1,9 +1,22 @@
 import type { Metadata } from "next";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { AtmosphereShader } from "@/components/shader/AtmosphereShader";
 import { Sidebar } from "@/components/nav/Sidebar";
 import { MobileDrawer } from "@/components/nav/MobileDrawer";
 import { getCatalogTree, getAllNotes } from "@/lib/content";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains-mono",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Vanta — BCA Digital Notes & Reference System",
@@ -19,8 +32,8 @@ export default function RootLayout({
   const notes = getAllNotes();
 
   return (
-    <html lang="en" className="dark">
-      <body className="bg-background text-text-primary antialiased flex h-screen overflow-hidden">
+    <html lang="en" className={`dark ${inter.variable} ${jetbrainsMono.variable}`}>
+      <body className="bg-background text-text-primary antialiased font-sans flex h-screen overflow-hidden">
         {/* Background Atmosphere Shader */}
         <AtmosphereShader />
 

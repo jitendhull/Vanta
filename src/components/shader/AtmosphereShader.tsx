@@ -66,11 +66,11 @@ void main() {
   float n1 = snoise(uv * 1.5 + vec2(t * 0.5, t * 0.3));
   float n2 = snoise(uv * 2.5 - vec2(t * 0.3, t * 0.7) + vec2(n1 * 0.5) + mouseInfluence);
 
-  float intensity = smoothstep(-0.2, 0.9, n2) * 0.045;
+  float intensity = smoothstep(-0.2, 0.9, n2) * 0.025;
 
-  // Base Obsidian background with subtle amber/gold tint in the highlights
-  vec3 baseColor = vec3(0.031, 0.031, 0.031); // #080808
-  vec3 accentColor = vec3(0.898, 0.663, 0.235); // #E5A93C
+  // Base Obsidian dark slate background with subtle cyan/ice accent
+  vec3 baseColor = vec3(0.035, 0.039, 0.05); // #090a0f
+  vec3 accentColor = vec3(0.22, 0.74, 0.97); // #38BDF8
 
   vec3 finalColor = mix(baseColor, accentColor, intensity);
 

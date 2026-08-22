@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { getAllNotes, getNoteBySlug } from "@/lib/content";
 import { Breadcrumbs } from "@/components/nav/Breadcrumbs";
 import { MarkdownViewer } from "@/components/viewer/MarkdownViewer";
-import { PdfViewer } from "@/components/viewer/PdfViewer";
+import { NoteSourceBar } from "@/components/viewer/NoteSourceBar";
 
 interface NotePageProps {
   params: Promise<{
@@ -42,8 +42,12 @@ export default async function NotePage({ params }: NotePageProps) {
         )}
       </header>
 
-      {/* Direct PDF Access & Download Bar */}
-      <PdfViewer pdfUrl={note.pdfUrl} title={note.title} />
+      {/* GitHub Source Access & Download Bar */}
+      <NoteSourceBar
+        githubUrl={note.githubUrl}
+        rawGithubUrl={note.rawGithubUrl}
+        title={note.title}
+      />
 
       {/* Core Markdown Content */}
       <div className="py-2">
