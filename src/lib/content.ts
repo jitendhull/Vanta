@@ -45,6 +45,7 @@ export function getAllNotes(): NoteItem[] {
     // Generate direct GitHub repository raw download URL for PDF
     // points to github repo raw content: https://raw.githubusercontent.com/jitendhull/Vanta/main/content/...
     const pdfRelPath = rel.replace(/\.mdx?$/, ".pdf");
+    const localPdfUrl = `/notes/${pdfRelPath}`;
     const githubPdfUrl = `https://raw.githubusercontent.com/jitendhull/Vanta/main/content/${pdfRelPath}`;
 
     const noteMeta: NoteMetadata = {
@@ -55,9 +56,7 @@ export function getAllNotes(): NoteItem[] {
       unit: data.unit || unitSlug.replace(/-/g, " "),
       unitSlug,
       slug: parts,
-      pdfUrl: (data.pdfUrl && !data.pdfUrl.startsWith("/"))
-        ? data.pdfUrl
-        : githubPdfUrl,
+      pdfUrl: data.pdfUrl || data.pdf || localPdfUrl,
       githubUrl: `https://github.com/jitendhull/Vanta/blob/main/content/${rel}`,
       description: data.description || "",
       order: data.order !== undefined ? data.order : 0,
