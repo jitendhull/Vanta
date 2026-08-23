@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -33,10 +33,28 @@ export const Sidebar: React.FC<SidebarProps> = ({ catalog, allNotes, onSelectNot
   const [expandedSubjects, setExpandedSubjects] = useState<Record<string, boolean>>({});
   const [expandedUnits, setExpandedUnits] = useState<Record<string, boolean>>({});
 
+  useEffect(() => {
+    if (!pathname || !pathname.startsWith("/notes/")) return;
+    const parts = pathname.replace(/^\/notes\//, "").replace(/\/$/, "").split("/");
+    if (parts.length >= 1) {
+      const semMatch = parts[0].match(/semester-(\d+)/i);
+      if (semMatch) {
+        const semNum = parseInt(semMatch[1], 10);
+        setExpandedSemesters((prev) => ({ ...prev, [semNum]: true }));
+      }
+    }
+    if (parts.length >= 2) {
+      setExpandedSubjects((prev) => ({ ...prev, [parts[1]]: true }));
+    }
+    if (parts.length >= 3) {
+      setExpandedUnits((prev) => ({ ...prev, [parts[2]]: true }));
+    }
+  }, [pathname]);
+
   const handleNoteClick = (note: NoteMetadata) => {
-    setExpandedSemesters({ [note.semester]: true });
-    setExpandedSubjects({});
-    setExpandedUnits({});
+    setExpandedSemesters((prev) => ({ ...prev, [note.semester]: true }));
+    setExpandedSubjects((prev) => ({ ...prev, [note.subjectSlug]: true }));
+    setExpandedUnits((prev) => ({ ...prev, [note.unitSlug]: true }));
     if (searchQuery) setSearchQuery("");
     if (onSelectNote) onSelectNote();
   };
