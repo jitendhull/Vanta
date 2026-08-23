@@ -30,14 +30,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ catalog, allNotes, onSelectNot
   const [expandedSemesters, setExpandedSemesters] = useState<Record<number, boolean>>({
     1: true,
   });
-  const [expandedSubjects, setExpandedSubjects] = useState<Record<string, boolean>>({
-    "discrete-mathematics": true,
-    "programming-in-c": true,
-  });
-  const [expandedUnits, setExpandedUnits] = useState<Record<string, boolean>>({
-    "unit-1-set-theory": true,
-    "unit-1-basics-and-io": true,
-  });
+  const [expandedSubjects, setExpandedSubjects] = useState<Record<string, boolean>>({});
+  const [expandedUnits, setExpandedUnits] = useState<Record<string, boolean>>({});
+
+  const handleNoteClick = (note: NoteMetadata) => {
+    setExpandedSemesters({ [note.semester]: true });
+    setExpandedSubjects({});
+    setExpandedUnits({});
+    if (searchQuery) setSearchQuery("");
+    if (onSelectNote) onSelectNote();
+  };
 
   const toggleSemester = (sem: number) => {
     setExpandedSemesters((prev) => ({ ...prev, [sem]: !prev[sem] }));
@@ -120,7 +122,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ catalog, allNotes, onSelectNot
                   <Link
                     key={note.slug.join("/")}
                     href={noteUrl}
-                    onClick={onSelectNote}
+                    onClick={() => handleNoteClick(note)}
                     className={`flex flex-col gap-1 px-3.5 py-2.5 rounded-md transition-colors ${
                       isActive
                         ? "bg-accent/15 text-accent border-l-2 border-accent font-medium"
@@ -236,7 +238,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ catalog, allNotes, onSelectNot
                                             <Link
                                               key={note.slug.join("/")}
                                               href={noteUrl}
-                                              onClick={onSelectNote}
+                                              onClick={() => handleNoteClick(note)}
                                               className={`flex items-center gap-2 px-2.5 py-1.5 rounded-md transition-colors text-xs ${
                                                 isActive
                                                   ? "bg-accent/15 text-accent font-medium border-l-2 border-accent"

@@ -42,11 +42,10 @@ export function getAllNotes(): NoteItem[] {
     const subjectSlug = parts[1] || data.subjectSlug || "general";
     const unitSlug = parts[2] || data.unitSlug || "unit-1";
 
-    // Generate direct GitHub repository raw download URL for PDF
-    // points to github repo raw content: https://raw.githubusercontent.com/jitendhull/Vanta/main/content/...
-    const pdfRelPath = rel.replace(/\.mdx?$/, ".pdf");
-    const localPdfUrl = `/notes/${pdfRelPath}`;
-    const githubPdfUrl = `https://raw.githubusercontent.com/jitendhull/Vanta/main/content/${pdfRelPath}`;
+    // Generate direct GitHub repository URL for PDF
+    // points to github repo blob viewer/downloader: https://github.com/jitendhull/Vanta/blob/main/public/notes/...
+    const pdfRelPath = rel.replace(/\.mdx?$/, ".pdf").replace(/\\/g, "/");
+    const githubPdfUrl = `https://github.com/jitendhull/Vanta/blob/main/public/notes/${pdfRelPath}`;
 
     const noteMeta: NoteMetadata = {
       title: data.title || parts[parts.length - 1].replace(/-/g, " "),
@@ -56,7 +55,11 @@ export function getAllNotes(): NoteItem[] {
       unit: data.unit || unitSlug.replace(/-/g, " "),
       unitSlug,
       slug: parts,
-      pdfUrl: data.pdfUrl || data.pdf || localPdfUrl,
+      pdfUrl: (data.pdfUrl && !data.pdfUrl.startsWith("/"))
+        ? data.pdfUrl
+        : (data.pdf && !data.pdf.startsWith("/"))
+        ? data.pdf
+        : githubPdfUrl,
       githubUrl: `https://github.com/jitendhull/Vanta/blob/main/content/${rel}`,
       description: data.description || "",
       order: data.order !== undefined ? data.order : 0,

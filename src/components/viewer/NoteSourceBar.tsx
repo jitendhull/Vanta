@@ -39,11 +39,10 @@ export const NoteSourceBar: React.FC<NoteSourceBarProps> = ({
           href={pdfUrl}
           target="_blank"
           rel="noopener noreferrer"
-          download
           className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-3.5 py-2 rounded text-xs font-mono font-semibold bg-accent hover:bg-accent/90 text-black transition-all shadow-sm"
         >
           <Download className="w-3.5 h-3.5" />
-          <span>Download PDF</span>
+          <span>View / Download PDF</span>
         </a>
       </div>
     </div>
