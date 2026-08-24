@@ -47,18 +47,16 @@ export default function HomePage() {
 
             const CardContent = (
               <div
-                className={`p-5 rounded-lg bg-surface border border-border transition-all duration-200 flex flex-col justify-between h-full group ${
-                  targetUrl
-                    ? "hover:border-accent hover:bg-surface-elevated hover:shadow-lg hover:shadow-accent/5 cursor-pointer"
-                    : "opacity-75"
+                className={`p-5 rounded-lg bg-surface border border-border transition-all duration-200 flex flex-col justify-between h-full group hover:border-accent hover:bg-surface-elevated hover:shadow-lg hover:shadow-accent/5 ${
+                  targetUrl ? "cursor-pointer" : "opacity-85 hover:opacity-100"
                 }`}
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <div className="p-2 rounded bg-surface-elevated border border-border">
+                    <div className="p-2 rounded bg-surface-elevated border border-border group-hover:border-accent/30 group-hover:bg-accent-dim transition-colors">
                       {semesterIcons[sem.semester] || <BookOpen className="w-5 h-5 text-accent" />}
                     </div>
-                    <span className="font-mono text-xs text-text-muted">
+                    <span className="font-mono text-xs text-text-muted group-hover:text-text-subtle transition-colors">
                       {hasSubjects ? `${sem.subjects.length} Subjects` : "Coming Soon"}
                     </span>
                   </div>
@@ -67,7 +65,7 @@ export default function HomePage() {
                     <h3 className="font-sans font-semibold text-base text-text-primary group-hover:text-accent transition-colors">
                       {sem.title}
                     </h3>
-                    <p className="text-xs text-text-muted mt-1 line-clamp-2">
+                    <p className="text-xs text-text-muted group-hover:text-text-primary/80 mt-1 line-clamp-2 transition-colors">
                       {hasSubjects
                         ? sem.subjects.map((s) => s.title).join(", ")
                         : "Curriculum indexing in progress."}
@@ -75,14 +73,17 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <div className="mt-5 pt-3 border-t border-border">
+                <div className="mt-5 pt-3 border-t border-border group-hover:border-border-hover transition-colors">
                   {hasSubjects && firstNote ? (
                     <span className="inline-flex items-center gap-1.5 text-xs font-mono text-accent group-hover:translate-x-0.5 transition-transform">
                       <span>Explore Notes</span>
                       <span>→</span>
                     </span>
                   ) : (
-                    <span className="text-xs font-mono text-text-muted">Under Preparation</span>
+                    <span className="inline-flex items-center gap-1.5 text-xs font-mono text-text-muted group-hover:text-accent transition-colors">
+                      <span>Under Preparation</span>
+                      <span className="opacity-60 group-hover:opacity-100">⏳</span>
+                    </span>
                   )}
                 </div>
               </div>
