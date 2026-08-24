@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { CatalogTree, NoteMetadata } from "@/types/content";
 import { searchNotes } from "@/lib/search";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 interface SidebarProps {
   catalog: CatalogTree;
@@ -77,29 +78,32 @@ export const Sidebar: React.FC<SidebarProps> = ({ catalog, allNotes, onSelectNot
   }, [allNotes, searchQuery]);
 
   return (
-    <aside className="w-80 md:w-84 flex flex-col h-full bg-[#0d0d0d]/90 backdrop-blur-md border-r border-white/[0.08] select-none">
+    <aside className="w-80 md:w-84 flex flex-col h-full bg-surface/95 backdrop-blur-md border-r border-border select-none">
       {/* Header / Brand */}
-      <div className="p-4 border-b border-white/[0.08] flex items-center justify-between">
+      <div className="p-4 border-b border-border flex items-center justify-between">
         <Link
           href="/"
           onClick={onSelectNote}
           className="flex items-center gap-3 text-text-primary hover:text-accent transition-colors group"
         >
-          <div className="w-8 h-8 rounded-md bg-accent/15 border border-accent/30 flex items-center justify-center text-accent text-sm font-mono font-bold group-hover:bg-accent/25 transition-all">
+          <div className="w-8 h-8 rounded-md bg-accent-dim border border-accent/30 flex items-center justify-center text-accent text-sm font-mono font-bold group-hover:bg-accent/25 transition-all">
             ✦
           </div>
           <div>
             <div className="text-sm font-semibold tracking-wide font-mono flex items-center gap-1.5">
               <span>VANTA</span>
-              <span className="text-[11px] px-1.5 py-0.5 rounded bg-white/5 text-accent border border-accent/20">BCA</span>
+              <span className="text-[11px] px-1.5 py-0.5 rounded bg-accent-dim text-accent border border-accent/20">BCA</span>
             </div>
             <div className="text-[11px] text-text-muted font-mono tracking-tight">DIGITAL ARCHIVE</div>
           </div>
         </Link>
+
+        {/* Theme switcher */}
+        <ThemeToggle />
       </div>
 
       {/* Filter / Search Bar */}
-      <div className="p-3 border-b border-white/[0.08]">
+      <div className="p-3 border-b border-border">
         <div className="relative">
           <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" />
           <input
@@ -107,7 +111,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ catalog, allNotes, onSelectNot
             placeholder="Search notes, units, subjects..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-[#141414] border border-white/[0.08] focus:border-accent/60 rounded-md px-3 py-2 pl-9 text-sm text-text-primary placeholder:text-text-muted/60 focus:outline-none transition-colors font-mono"
+            className="w-full bg-background border border-border focus:border-accent rounded-md px-3 py-2 pl-9 text-sm text-text-primary placeholder:text-text-muted focus:outline-none transition-colors font-mono"
           />
           {searchQuery && (
             <button
@@ -132,7 +136,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ catalog, allNotes, onSelectNot
                 No matching topics found.
               </div>
             ) : (
-              searchResults.map(({ note, matchedField }) => {
+              searchResults.map(({ note }) => {
                 const noteUrl = `/notes/${note.slug.join("/")}/`;
                 const isActive = pathname === noteUrl || pathname === `/notes/${note.slug.join("/")}`;
 
@@ -143,8 +147,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ catalog, allNotes, onSelectNot
                     onClick={() => handleNoteClick(note)}
                     className={`flex flex-col gap-1 px-3.5 py-2.5 rounded-md transition-colors ${
                       isActive
-                        ? "bg-accent/15 text-accent border-l-2 border-accent font-medium"
-                        : "text-text-primary hover:bg-white/[0.04]"
+                        ? "bg-accent-dim text-accent border-l-2 border-accent font-medium"
+                        : "text-text-primary hover:bg-surface-elevated"
                     }`}
                   >
                     <div className="font-sans font-medium text-sm truncate">{note.title}</div>
@@ -166,7 +170,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ catalog, allNotes, onSelectNot
                 {/* Semester Row */}
                 <button
                   onClick={() => toggleSemester(sem.semester)}
-                  className="w-full flex items-center justify-between px-3 py-2 rounded-md hover:bg-white/[0.04] text-text-primary transition-colors text-left group"
+                  className="w-full flex items-center justify-between px-3 py-2 rounded-md hover:bg-surface-elevated text-text-primary transition-colors text-left group"
                 >
                   <div className="flex items-center gap-2.5 font-mono font-medium text-sm tracking-tight">
                     <GraduationCap className="w-4 h-4 text-accent" />
@@ -179,7 +183,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ catalog, allNotes, onSelectNot
                       <ChevronRight className="w-4 h-4 text-text-muted" />
                     )
                   ) : (
-                    <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-white/[0.03] text-text-muted">
+                    <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-surface-elevated text-text-muted border border-border">
                       soon
                     </span>
                   )}
@@ -187,7 +191,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ catalog, allNotes, onSelectNot
 
                 {/* Subjects List */}
                 {isSemExpanded && hasSubjects && (
-                  <div className="pl-3 space-y-1 border-l border-white/[0.08] ml-4 my-1">
+                  <div className="pl-3 space-y-1 border-l border-border ml-4 my-1">
                     {sem.subjects.map((subject) => {
                       const isSubExpanded = !!expandedSubjects[subject.slug];
 
@@ -196,7 +200,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ catalog, allNotes, onSelectNot
                           {/* Subject Row */}
                           <button
                             onClick={() => toggleSubject(subject.slug)}
-                            className="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-white/[0.04] text-text-primary/90 transition-colors text-left"
+                            className="w-full flex items-center justify-between px-2.5 py-1.5 rounded hover:bg-surface-elevated text-text-primary transition-colors text-left"
                           >
                             <div className="flex items-center gap-2 truncate">
                               <BookOpen className="w-3.5 h-3.5 text-text-muted flex-shrink-0" />
@@ -211,7 +215,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ catalog, allNotes, onSelectNot
 
                           {/* Units List */}
                           {isSubExpanded && (
-                            <div className="pl-3 space-y-0.5 border-l border-white/[0.08] ml-3 my-0.5">
+                            <div className="pl-3 space-y-0.5 border-l border-border ml-3 my-0.5">
                               {subject.units.map((unit) => {
                                 const isUnitExpanded = !!expandedUnits[unit.slug];
 
@@ -221,7 +225,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ catalog, allNotes, onSelectNot
                                     {unit.notes.length > 0 ? (
                                       <button
                                         onClick={() => toggleUnit(unit.slug)}
-                                        className="w-full flex items-center justify-between px-2.5 py-1 rounded hover:bg-white/[0.03] text-text-muted hover:text-text-primary transition-colors text-left"
+                                        className="w-full flex items-center justify-between px-2.5 py-1 rounded hover:bg-surface-elevated text-text-muted hover:text-text-primary transition-colors text-left"
                                       >
                                         <div className="flex items-center gap-1.5 truncate">
                                           <Layers className="w-3 h-3 flex-shrink-0" />
@@ -239,13 +243,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ catalog, allNotes, onSelectNot
                                           <Layers className="w-3 h-3 flex-shrink-0 opacity-40" />
                                           <span className="truncate font-mono text-xs">{unit.title}</span>
                                         </div>
-                                        <span className="text-[9px] font-mono px-1 py-0.2 rounded bg-white/[0.02] text-text-muted/40">soon</span>
+                                        <span className="text-[9px] font-mono px-1 py-0.2 rounded bg-surface-elevated text-text-muted border border-border">soon</span>
                                       </div>
                                     )}
 
                                     {/* Notes Links */}
                                     {isUnitExpanded && (
-                                      <div className="pl-3 space-y-0.5 border-l border-white/[0.08] ml-2.5 my-0.5">
+                                      <div className="pl-3 space-y-0.5 border-l border-border ml-2.5 my-0.5">
                                         {unit.notes.map((note) => {
                                           const noteUrl = `/notes/${note.slug.join("/")}/`;
                                           const isActive =
@@ -259,8 +263,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ catalog, allNotes, onSelectNot
                                               onClick={() => handleNoteClick(note)}
                                               className={`flex items-center gap-2 px-2.5 py-1.5 rounded-md transition-colors text-xs ${
                                                 isActive
-                                                  ? "bg-accent/15 text-accent font-medium border-l-2 border-accent"
-                                                  : "text-text-muted hover:text-text-primary hover:bg-white/[0.03]"
+                                                  ? "bg-accent-dim text-accent font-medium border-l-2 border-accent"
+                                                  : "text-text-muted hover:text-text-primary hover:bg-surface-elevated"
                                               }`}
                                             >
                                               <FileText className="w-3.5 h-3.5 flex-shrink-0" />
@@ -287,7 +291,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ catalog, allNotes, onSelectNot
       </div>
 
       {/* Footer Info */}
-      <div className="p-3.5 border-t border-white/[0.08] text-xs font-mono text-text-muted flex items-center justify-between">
+      <div className="p-3.5 border-t border-border text-xs font-mono text-text-muted flex items-center justify-between">
         <span>BCA 2026 // ED.</span>
         <Link
           href="/about/"

@@ -24,7 +24,7 @@ function extractRawText(node: any): string {
 
 export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
   return (
-    <div className="prose prose-invert max-w-[68ch] leading-relaxed text-text-primary text-sm sm:text-base space-y-4">
+    <div className="max-w-[68ch] leading-relaxed text-text-primary text-sm sm:text-base space-y-4">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeHighlight]}
@@ -74,7 +74,7 @@ export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
             }
 
             return (
-              <blockquote className="border-l-2 border-white/20 pl-4 italic text-text-muted my-4">
+              <blockquote className="border-l-2 border-border pl-4 italic text-text-muted my-4">
                 {children}
               </blockquote>
             );
@@ -86,7 +86,7 @@ export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
 
             if (isInline) {
               return (
-                <code className="bg-white/[0.08] text-accent px-1.5 py-0.5 rounded text-xs font-mono border border-white/[0.05]">
+                <code className="bg-code-bg text-accent px-1.5 py-0.5 rounded text-xs font-mono border border-border">
                   {children}
                 </code>
               );
@@ -102,7 +102,7 @@ export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
           // Custom table styling for GFM
           table({ children }) {
             return (
-              <div className="overflow-x-auto my-6 border border-white/[0.08] rounded-md">
+              <div className="overflow-x-auto my-6 border border-border rounded-md">
                 <table className="w-full text-left border-collapse text-xs sm:text-sm font-sans">
                   {children}
                 </table>
@@ -110,13 +110,13 @@ export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
             );
           },
           thead({ children }) {
-            return <thead className="bg-[#181818] border-b border-white/[0.08] text-accent font-mono">{children}</thead>;
+            return <thead className="bg-surface-elevated border-b border-border text-accent font-mono">{children}</thead>;
           },
           th({ children }) {
             return <th className="p-3 font-semibold text-xs uppercase tracking-wider">{children}</th>;
           },
           td({ children }) {
-            return <td className="p-3 border-b border-white/[0.04] text-text-primary/90">{children}</td>;
+            return <td className="p-3 border-b border-border/50 text-text-primary">{children}</td>;
           },
 
           // Headings styling
@@ -125,7 +125,7 @@ export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
           },
           h2({ children }) {
             return (
-              <h2 className="text-xl sm:text-2xl font-semibold font-sans text-text-primary mt-6 mb-3 border-b border-white/[0.08] pb-2">
+              <h2 className="text-xl sm:text-2xl font-semibold font-sans text-text-primary mt-6 mb-3 border-b border-border pb-2">
                 {children}
               </h2>
             );
@@ -136,15 +136,15 @@ export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
 
           // Paragraph styling
           p({ children }) {
-            return <p className="my-3 leading-7 text-text-primary/90">{children}</p>;
+            return <p className="my-3 leading-7 text-text-primary">{children}</p>;
           },
 
           // Lists styling
           ul({ children }) {
-            return <ul className="list-disc pl-6 my-3 space-y-1.5 text-text-primary/90">{children}</ul>;
+            return <ul className="list-disc pl-6 my-3 space-y-1.5 text-text-primary">{children}</ul>;
           },
           ol({ children }) {
-            return <ol className="list-decimal pl-6 my-3 space-y-1.5 text-text-primary/90">{children}</ol>;
+            return <ol className="list-decimal pl-6 my-3 space-y-1.5 text-text-primary">{children}</ol>;
           },
         }}
       >

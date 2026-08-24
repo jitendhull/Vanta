@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import { useTheme } from "@/components/ui/ThemeProvider";
 
 // WebGL2 Simplex Fluid Warp Shader
 const VERTEX_SHADER = `#version 300 es
@@ -17,6 +18,7 @@ out vec4 fragColor;
 uniform vec2 u_resolution;
 uniform vec2 u_mouse;
 uniform float u_time;
+uniform float u_is_dark;
 
 // Simplex 2D noise helper
 vec3 permute(vec3 x) { return mod(((x*34.0)+1.0)*x, 289.0); }
@@ -66,17 +68,25 @@ void main() {
   float n1 = snoise(uv * 1.5 + vec2(t * 0.5, t * 0.3));
   float n2 = snoise(uv * 2.5 - vec2(t * 0.3, t * 0.7) + vec2(n1 * 0.5) + mouseInfluence);
 
-  float intensity = smoothstep(-0.2, 0.9, n2) * 0.025;
+  float intensity = smoothstep(-0.2, 0.9, n2) * 0.03;
 
-  // Base Obsidian dark slate background with subtle cyan/ice accent
-  vec3 baseColor = vec3(0.035, 0.039, 0.05); // #090a0f
-  vec3 accentColor = vec3(0.22, 0.74, 0.97); // #38BDF8
+  // Colors based on dark or light mode
+  // Dark: warm graphite #20211e & rust #df8a63
+  // Light: warm paper #f4f0e7 & warm amber #9a4d32
+  vec3 baseDark = vec3(0.125, 0.129, 0.118);
+  vec3 accentDark = vec3(0.875, 0.541, 0.388);
+
+  vec3 baseLight = vec3(0.957, 0.941, 0.906);
+  vec3 accentLight = vec3(0.604, 0.302, 0.196);
+
+  vec3 baseColor = mix(baseLight, baseDark, u_is_dark);
+  vec3 accentColor = mix(accentLight, accentDark, u_is_dark);
 
   vec3 finalColor = mix(baseColor, accentColor, intensity);
 
   // Subtle radial vignette
   float vignette = smoothstep(1.2, 0.2, length(st - vec2(0.5)));
-  finalColor *= mix(0.7, 1.0, vignette);
+  finalColor *= mix(0.92, 1.0, vignette);
 
   fragColor = vec4(finalColor, 1.0);
 }
@@ -97,6 +107,12 @@ function createShader(gl: WebGL2RenderingContext, type: number, source: string) 
 
 export const AtmosphereShader: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const { theme } = useTheme();
+  const themeRef = useRef(theme);
+
+  useEffect(() => {
+    themeRef.current = theme;
+  }, [theme]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -141,6 +157,7 @@ export const AtmosphereShader: React.FC = () => {
     const resLoc = gl.getUniformLocation(program, "u_resolution");
     const mouseLoc = gl.getUniformLocation(program, "u_mouse");
     const timeLoc = gl.getUniformLocation(program, "u_time");
+    const isDarkLoc = gl.getUniformLocation(program, "u_is_dark");
 
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
@@ -191,6 +208,7 @@ export const AtmosphereShader: React.FC = () => {
       gl.uniform2f(resLoc, canvas.width, canvas.height);
       gl.uniform2f(mouseLoc, mouseX * 0.5, mouseY * 0.5);
       gl.uniform1f(timeLoc, (currentTime - startTime) * 0.001);
+      gl.uniform1f(isDarkLoc, themeRef.current === "dark" ? 1.0 : 0.0);
 
       gl.drawArrays(gl.TRIANGLES, 0, 6);
     };
@@ -213,7 +231,7 @@ export const AtmosphereShader: React.FC = () => {
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className="fixed inset-0 w-full h-full pointer-events-none z-0 opacity-80"
+      className="fixed inset-0 w-full h-full pointer-events-none z-0 opacity-60 transition-opacity duration-300"
     />
   );
 };

@@ -14,38 +14,38 @@ const CALLOUT_CONFIG: Record<
   { border: string; bg: string; text: string; icon: React.ComponentType<{ className?: string }> }
 > = {
   definition: {
-    border: "border-l-[#E5A93C]",
-    bg: "bg-[#E5A93C]/[0.05]",
-    text: "text-[#E5A93C]",
+    border: "border-l-callout-def",
+    bg: "bg-callout-def/[0.08]",
+    text: "text-callout-def",
     icon: Info,
   },
   valid: {
-    border: "border-l-[#10B981]",
-    bg: "bg-[#10B981]/[0.05]",
-    text: "text-[#10B981]",
+    border: "border-l-callout-valid",
+    bg: "bg-callout-valid/[0.08]",
+    text: "text-callout-valid",
     icon: CheckCircle2,
   },
   invalid: {
-    border: "border-l-[#F43F5E]",
-    bg: "bg-[#F43F5E]/[0.05]",
-    text: "text-[#F43F5E]",
+    border: "border-l-callout-invalid",
+    bg: "bg-callout-invalid/[0.08]",
+    text: "text-callout-invalid",
     icon: AlertTriangle,
   },
   example: {
-    border: "border-l-[#60A5FA]",
-    bg: "bg-[#60A5FA]/[0.05]",
-    text: "text-[#60A5FA]",
+    border: "border-l-callout-example",
+    bg: "bg-callout-example/[0.08]",
+    text: "text-callout-example",
     icon: Code2,
   },
   compare: {
-    border: "border-l-white/40",
-    bg: "bg-white/[0.03]",
+    border: "border-l-text-muted",
+    bg: "bg-surface-elevated",
     text: "text-text-primary",
     icon: Columns,
   },
   note: {
     border: "border-l-accent",
-    bg: "bg-accent/[0.05]",
+    bg: "bg-accent-dim",
     text: "text-accent",
     icon: Info,
   },
@@ -57,7 +57,7 @@ export const CalloutCard: React.FC<CalloutCardProps> = ({ type, title, children 
 
   return (
     <div
-      className={`my-4 rounded-r-md border-l-[3px] ${config.border} ${config.bg} p-4 border-t border-r border-b border-white/[0.06] transition-all`}
+      className={`my-4 rounded-r-md border-l-[3px] ${config.border} ${config.bg} p-4 border-t border-r border-b border-border transition-all`}
     >
       {title && (
         <div className={`flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-wider mb-2 ${config.text}`}>

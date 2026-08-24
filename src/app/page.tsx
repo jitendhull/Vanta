@@ -17,7 +17,7 @@ export default function HomePage() {
   return (
     <div className="max-w-[76ch] mx-auto space-y-10 animate-fade-in">
       {/* Hero header */}
-      <div className="space-y-4 border-b border-white/[0.08] pb-8">
+      <div className="space-y-4 border-b border-border pb-8">
         <h1 className="text-3xl sm:text-4xl font-bold font-sans tracking-tight text-text-primary">
           Vanta Notes Library
         </h1>
@@ -47,15 +47,15 @@ export default function HomePage() {
 
             const CardContent = (
               <div
-                className={`p-5 rounded-lg bg-surface border border-white/[0.08] transition-all duration-200 flex flex-col justify-between h-full group ${
+                className={`p-5 rounded-lg bg-surface border border-border transition-all duration-200 flex flex-col justify-between h-full group ${
                   targetUrl
-                    ? "hover:border-accent/50 hover:bg-surface-elevated hover:shadow-lg hover:shadow-accent/5 cursor-pointer"
+                    ? "hover:border-accent hover:bg-surface-elevated hover:shadow-lg hover:shadow-accent/5 cursor-pointer"
                     : "opacity-75"
                 }`}
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <div className="p-2 rounded bg-white/[0.03] border border-white/[0.05]">
+                    <div className="p-2 rounded bg-surface-elevated border border-border">
                       {semesterIcons[sem.semester] || <BookOpen className="w-5 h-5 text-accent" />}
                     </div>
                     <span className="font-mono text-xs text-text-muted">
@@ -75,14 +75,14 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <div className="mt-5 pt-3 border-t border-white/[0.05]">
+                <div className="mt-5 pt-3 border-t border-border">
                   {hasSubjects && firstNote ? (
                     <span className="inline-flex items-center gap-1.5 text-xs font-mono text-accent group-hover:translate-x-0.5 transition-transform">
                       <span>Explore Notes</span>
                       <span>→</span>
                     </span>
                   ) : (
-                    <span className="text-xs font-mono text-text-muted/60">Under Preparation</span>
+                    <span className="text-xs font-mono text-text-muted">Under Preparation</span>
                   )}
                 </div>
               </div>
@@ -106,15 +106,15 @@ export default function HomePage() {
       </div>
 
       {/* Feature badges */}
-      <div className="p-5 rounded-lg bg-surface/60 border border-white/[0.08] space-y-3 font-mono text-xs text-text-muted">
+      <div className="p-5 rounded-lg bg-surface border border-border space-y-3 font-mono text-xs text-text-muted">
         <div className="text-text-primary font-medium flex items-center gap-2">
-          <span>✦</span>
+          <span className="text-accent">✦</span>
           <span>KEY FEATURES</span>
         </div>
         <ul className="space-y-1.5 list-disc pl-5">
           <li>Callout boxes: clear highlights for definitions, verified rules, common mistakes, and practical examples.</li>
-          <li>Fast and private: 100% static pages hosted on GitHub with no tracking scripts or server delays.</li>
-          <li>Optimized performance: smooth dark theme with low-power mode support.</li>
+          <li>Dual theme support: refined light paper and dark obsidian color schemes.</li>
+          <li>Fast and private: 100% static pages hosted on GitHub with zero tracking scripts.</li>
         </ul>
       </div>
     </div>

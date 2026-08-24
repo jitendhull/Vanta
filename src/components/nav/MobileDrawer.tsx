@@ -19,7 +19,7 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({ catalog, allNotes })
       <button
         onClick={() => setIsOpen(true)}
         aria-label="Open Navigation"
-        className="p-2 text-text-primary hover:text-accent bg-surface border border-white/[0.08] rounded-md transition-colors"
+        className="p-2 text-text-primary hover:text-accent bg-surface border border-border rounded-md transition-colors"
       >
         <Menu className="w-5 h-5" />
       </button>
@@ -29,16 +29,16 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({ catalog, allNotes })
         <div className="fixed inset-0 z-50 flex">
           {/* Overlay */}
           <div
-            className="fixed inset-0 bg-black/70 backdrop-blur-sm"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setIsOpen(false)}
           />
 
           {/* Drawer Panel */}
-          <div className="relative w-4/5 max-w-sm h-full bg-[#0d0d0d] shadow-2xl z-50 flex flex-col">
+          <div className="relative w-4/5 max-w-sm h-full bg-surface shadow-2xl z-50 flex flex-col">
             <div className="absolute top-3 right-3 z-10">
               <button
                 onClick={() => setIsOpen(false)}
-                className="p-1.5 rounded-full bg-white/5 hover:bg-white/10 text-text-muted hover:text-text-primary transition-colors"
+                className="p-1.5 rounded-full bg-surface-elevated hover:bg-border text-text-muted hover:text-text-primary transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>

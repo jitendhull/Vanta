@@ -50,7 +50,7 @@ export default async function NotePage({ params }: NotePageProps) {
       />
 
       {/* Note Header Title */}
-      <header className="border-b border-white/[0.08] pb-4 space-y-2">
+      <header className="border-b border-border pb-4 space-y-2">
         <h1 className="text-2xl sm:text-3xl font-bold font-sans tracking-tight text-text-primary">
           {note.title}
         </h1>
@@ -74,7 +74,7 @@ export default async function NotePage({ params }: NotePageProps) {
       </div>
 
       {/* Bottom orientation metadata */}
-      <footer className="mt-12 pt-6 border-t border-white/[0.08] flex items-center justify-between text-xs font-mono text-text-muted">
+      <footer className="mt-12 pt-6 border-t border-border flex items-center justify-between text-xs font-mono text-text-muted">
         <span>Semester {note.semester} // {note.subject}</span>
         <span>Unit: {note.unit}</span>
       </footer>
